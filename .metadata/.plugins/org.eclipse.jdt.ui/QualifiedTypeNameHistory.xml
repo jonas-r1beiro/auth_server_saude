@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.springframework.jdbc.core.JdbcTemplate"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService"/>
+    <fullyQualifiedTypeName name="org.springframework.jdbc.core.JdbcOperations"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService"/>
+    <fullyQualifiedTypeName name="org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService"/>
+</qualifiedTypeNameHistroy>

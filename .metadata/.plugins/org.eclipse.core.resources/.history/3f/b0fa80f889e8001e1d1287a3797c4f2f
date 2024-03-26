@@ -1,0 +1,5 @@
+package br.com.magnasistemas.auth_server_saude.entity;
+
+public class Papel {
+
+}
