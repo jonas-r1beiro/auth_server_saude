@@ -64,3 +64,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+.button_return{
+	display: flex;
+	padding: 15px;
+	margin-top: 5vh;
+	background-color: #2E577D;
+	justify-content: center;
+	color: #FFFFFF;
+	font-family: "Roboto", sans-serif;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none;
+}

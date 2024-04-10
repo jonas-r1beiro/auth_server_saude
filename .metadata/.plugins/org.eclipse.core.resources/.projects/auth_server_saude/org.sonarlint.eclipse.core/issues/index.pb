@@ -27,3 +27,7 @@ V
 Tsrc/main/java/br/com/magnasistemas/auth_server_saude/security/CorsConfiguration.java,2\e\2eb3efb30c4b22c13e2fbc4270301500b8144258
 „
 Tsrc/main/java/br/com/magnasistemas/auth_server_saude/controller/LoginController.java,c\0\c05b2db1623b4b620afb6df241cada6b178a9d2e
+W
+'src/main/resources/static/css/style.css,f\1\f1805981f76a3b436234f76681e9b7554336982e
+W
+'src/main/resources/templates/login.html,6\4\64b48127ab06e5df4a6ed58b34ac3aba28784c99

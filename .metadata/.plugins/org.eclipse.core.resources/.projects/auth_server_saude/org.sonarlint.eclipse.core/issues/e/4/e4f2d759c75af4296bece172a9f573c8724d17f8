@@ -1,22 +1,18 @@
 
-s	java:S125z"<This block of commented-out lines of code should be removed.(Ç²ç˜ÿÿÿÿÿ8¬·û¤ì1HÉRMAJORZ
-CODE_SMELL
-t
-java:S6201¥"BReplace this instanceof check and cast with 'instanceof User user'(¸êİ£ùÿÿÿÿHĞRMINORZ
-CODE_SMELL
 h
-java:S6437Â"6Revoke and change this password, as it is compromised.(æ„¢úHÈRBLOCKERZVULNERABILITY
-m	java:S125G"<This block of commented-out lines of code should be removed.(£¬¾u8¬·û¤ì1H½RMAJORZ
-CODE_SMELL
-j
-java:S1611`"8Remove the parentheses around the "exceptions" parameter(Œ´şq8õéÙšì1H¤RMINORZ
-CODE_SMELL
+java:S6437"6Revoke and change this password, as it is compromised.(æ„¢úHÈRBLOCKERZVULNERABILITY
 d
-java:S1611"7Remove the parentheses around the "authorize" parameter(–²ÇÁHÒRMINORZ
+java:S1611v"1Remove the parentheses around the "web" parameter(¥»çñ8Æü¤ì1HÆRMINORZ
 CODE_SMELL
 o
-java:S1611f"<Remove the parentheses around the "resourceServer" parameter(õìÌš8Ã½À¢ì1HÅRMINORZ
+java:S1611R"<Remove the parentheses around the "resourceServer" parameter(õìÌš8Ã½À¢ì1HÉRMINORZ
 CODE_SMELL
-e
-java:S1611›"1Remove the parentheses around the "web" parameter(¥»çñ8Æü¤ì1HêRMINORZ
+c
+java:S1611j"7Remove the parentheses around the "authorize" parameter(–²ÇÁHÃRMINORZ
+CODE_SMELL
+t
+java:S6201€"BReplace this instanceof check and cast with 'instanceof User user'(¸êİ£ùÿÿÿÿHÄRMINORZ
+CODE_SMELL
+j
+java:S1611L"8Remove the parentheses around the "exceptions" parameter(Œ´şq8õéÙšì1HÇRMINORZ
 CODE_SMELL

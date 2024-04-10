@@ -125,7 +125,7 @@ public class AuthSecurityConfig {
 		return (context ->{
 			Authentication authentication = context.getPrincipal();
 			
-			if(authentication.getPrincipal() instanceof User ) {
+			if(authentication.getPrincipal() instanceof User) {
 				final User user = (User) authentication.getPrincipal();
 				
 				Usuario usuario = usuarioRepository.findByLogin(user.getUsername());
