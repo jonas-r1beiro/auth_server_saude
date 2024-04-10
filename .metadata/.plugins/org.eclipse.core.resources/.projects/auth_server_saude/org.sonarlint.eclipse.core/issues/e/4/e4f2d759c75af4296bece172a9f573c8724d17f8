@@ -1,50 +1,22 @@
 
-_
-java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿH±RMINORZ
+s	java:S125z"<This block of commented-out lines of code should be removed.(Ç²ç˜ÿÿÿÿÿ8¬·û¤ì1HÉRMAJORZ
 CODE_SMELL
-·
-java:S1128$"Remove this unused import 'org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository'.(Ò²¤þøÿÿÿÿ8ÊžÝç1H…RMINORZ
+t
+java:S6201¥"BReplace this instanceof check and cast with 'instanceof User user'(¸êÝ£ùÿÿÿÿHÐRMINORZ
 CODE_SMELL
-b
-java:S1611J"1Remove the parentheses around the "req" parameter(ÃŠù†ùÿÿÿÿH§RMINORZ
+h
+java:S6437Â"6Revoke and change this password, as it is compromised.(æ„¢úHÈRBLOCKERZVULNERABILITY
+m	java:S125G"<This block of commented-out lines of code should be removed.(£¬¾u8¬·û¤ì1H½RMAJORZ
 CODE_SMELL
-]
-java:S1602C",Remove useless curly braces around statement(š®ÓØùÿÿÿÿH¨RMINORZ
+j
+java:S1611`"8Remove the parentheses around the "exceptions" parameter(Œ´þq8õéÙšì1H¤RMINORZ
 CODE_SMELL
-]
-java:S1602N",Remove useless curly braces around statement(š®ÓØùÿÿÿÿH¦RMINORZ
+d
+java:S1611"7Remove the parentheses around the "authorize" parameter(–²ÇÁHÒRMINORZ
 CODE_SMELL
-]
-java:S1602J",Remove useless curly braces around statement(ÃŠù†ùÿÿÿÿHªRMINORZ
-CODE_SMELL
-c
-java:S1611N"2Remove the parentheses around the "form" parameter(š®ÓØùÿÿÿÿH©RMINORZ
+o
+java:S1611f"<Remove the parentheses around the "resourceServer" parameter(õìÌš8Ã½À¢ì1HÅRMINORZ
 CODE_SMELL
 e
-java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8—À£Ýç1H•RMINORZ
-CODE_SMELL
-\
-java:S1128
-"+Remove this unused import 'java.util.List'.(Õë±ÄøÿÿÿÿH³RMINORZ
-CODE_SMELL
-l
-java:S6437u"6Revoke and change this password, as it is compromised.(ûø­¸üÿÿÿÿH­RBLOCKERZVULNERABILITY
-[
-java:S1128"*Remove this unused import 'java.util.Map'.(¼è½ÒþÿÿÿÿHµRMINORZ
-CODE_SMELL
-\
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒH¯RMINORZ
-CODE_SMELL
-c
-java:S1611C"2Remove the parentheses around the "form" parameter(š®ÓØùÿÿÿÿH¥RMINORZ
-CODE_SMELL
-s
-java:S6201X"BReplace this instanceof check and cast with 'instanceof User user'(¸êÝ£ùÿÿÿÿH«RMINORZ
-CODE_SMELL
-m
-java:S6437…"6Revoke and change this password, as it is compromised.(ûø­¸üÿÿÿÿH®RBLOCKERZVULNERABILITY
-w	java:S112´"FDefine and throw a dedicated exception instead of using a generic one.(Û‰’àüÿÿÿÿH¤RMAJORZ
-CODE_SMELL
-k
-java:S11280"?Remove this unused import 'com.nimbusds.jose.crypto.impl.HMAC'.(›ô¼êH·RMINORZ
+java:S1611›"1Remove the parentheses around the "web" parameter(¥»çñ8Æü¤ì1HêRMINORZ
 CODE_SMELL

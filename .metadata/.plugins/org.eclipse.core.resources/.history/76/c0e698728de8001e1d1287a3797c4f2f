@@ -1,5 +1,0 @@
-package br.com.magnasistemas.auth_server_saude.security;
-
-public class ClientStoreConfig {
-
-}

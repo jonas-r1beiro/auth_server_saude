@@ -1,14 +1,14 @@
 package br.com.magnasistemas.auth_server_saude.security;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.context.annotation.Bean;
@@ -16,11 +16,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -33,19 +35,24 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.nimbusds.jose.crypto.impl.HMAC;
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -63,22 +70,55 @@ public class AuthSecurityConfig {
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-		
-		return http.formLogin((form) -> {
-			Customizer.withDefaults();
-		}).build();
+		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+			.oidc(Customizer.withDefaults());
+		http
+			.exceptionHandling((exceptions) -> exceptions
+				.defaultAuthenticationEntryPointFor(
+					new LoginUrlAuthenticationEntryPoint("/login"),
+					new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+				)
+			)
+			.oauth2ResourceServer((resourceServer) -> resourceServer
+				.jwt(Customizer.withDefaults()));
+
+		return http.build();
 	}
 	
 	@Bean
-	public SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((req) ->{
-			req.anyRequest().authenticated();
-		});
-		
-		return http.formLogin((form) -> {
-			Customizer.withDefaults();
-		}).build();
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowCredentials(true);
+        config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+	
+	@Bean 
+	@Order(2)
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+			throws Exception {
+		http
+			.authorizeHttpRequests((authorize) -> authorize
+				.requestMatchers("/error").permitAll()
+				.anyRequest().authenticated())
+			.formLogin(formLogin -> formLogin
+				.loginPage("/login")
+				.permitAll()
+		);
+		return http.build();
 	}
+	
+	@Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.debug(false)
+                .ignoring()
+                .requestMatchers("/webjars/**", "/images/**", "/css/**", "/assets/**", "/favicon.ico");
+    }
 	
 	@Bean
 	public OAuth2TokenCustomizer<JwtEncodingContext> jwtEncodingContextAuth2TokenCustomizer(UsuarioRepository usuarioRepository){
@@ -111,35 +151,19 @@ public class AuthSecurityConfig {
 	public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder,
 																JdbcTemplate jdbcTemplate) {
 		
-		RegisteredClient awuserClient = RegisteredClient
-				.withId("1")
-				.clientId("awuser")
-				.clientSecret(passwordEncoder.encode("123456"))
-				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-				.scope("users:read")
-				.scope("users:write")
-				.tokenSettings(TokenSettings.builder()
-						.accessTokenTimeToLive(Duration.ofMinutes(5))
-						.build())
-				.clientSettings(ClientSettings.builder()
-						.requireAuthorizationConsent(false)
-						.build())
-				.build();
-		
 		RegisteredClient awblogClient = RegisteredClient
 				.withId("2")
-				.clientId("awblog")
-				.clientSecret(passwordEncoder.encode("123456"))
+				.clientId("telaAngular")
+				.clientSecret(passwordEncoder.encode("Magna@123"))
 				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
 				.redirectUri("http://localhost:3000/authorized")
 				.redirectUri("https://oidcdebugger.com/debug")
-				.redirectUri("https://oauth.pstmn.io/v1/callback")				
-				.scope("myuser:read")
-				.scope("myuser:write")
-				.scope("posts:write")
+				.redirectUri("https://oauth.pstmn.io/v1/callback")
+				.redirectUri("http://localhost:4200/sucesso-login")
 				.tokenSettings(TokenSettings.builder()
 						.accessTokenTimeToLive(Duration.ofMinutes(15))
 						.refreshTokenTimeToLive(Duration.ofDays(1))
@@ -152,7 +176,7 @@ public class AuthSecurityConfig {
 		
 		JdbcRegisteredClientRepository clientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
 		clientRepository.save(awblogClient);
-		clientRepository.save(awuserClient);
+		
 		return clientRepository;
 	}
 	
@@ -177,7 +201,7 @@ public class AuthSecurityConfig {
 	}
 	
 	@Bean
-	public JWKSet jwkSet(AuthProperties authProperties) throws Exception{
+	public JWKSet jwkSet(AuthProperties authProperties) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException, JOSEException {
 		JksProperties jksProperties = authProperties.getJks();
 		
 		
