@@ -1,18 +1,28 @@
 
-h
-java:S6437"6Revoke and change this password, as it is compromised.(æ„¢úHÈRBLOCKERZVULNERABILITY
+’
+java:S1488}"_Immediately return this expression instead of assigning it to the temporary variable "retorno".(’«¸é8öÛØüì1HšRMINORZ
+CODE_SMELL
+n	java:S125L"<This block of commented-out lines of code should be removed.(şšÔ8÷ïºÁî1H¥RMAJORZ
+CODE_SMELL
 d
-java:S1611v"1Remove the parentheses around the "web" parameter(¥»çñ8Æü¤ì1HÆRMINORZ
+java:S1602s",Remove useless curly braces around statement(èÂÜ†ÿÿÿÿÿ8¯İüì1H¤RMINORZ
 CODE_SMELL
-o
-java:S1611R"<Remove the parentheses around the "resourceServer" parameter(õìÌš8Ã½À¢ì1HÉRMINORZ
+t	java:S125¿"<This block of commented-out lines of code should be removed.(Â™†úÿÿÿÿ8‹­Äî1HğRMAJORZ
 CODE_SMELL
-c
-java:S1611j"7Remove the parentheses around the "authorize" parameter(–²ÇÁHÃRMINORZ
+_
+java:S1602J",Remove useless curly braces around statement(¿§œŒ8öÛØüì1H¢RMINORZ
+CODE_SMELL
+h
+java:S6437Ä"6Revoke and change this password, as it is compromised.(æ„¢úH£RBLOCKERZVULNERABILITY
+j
+java:S1611T"8Remove the parentheses around the "exceptions" parameter(Œ´şq8Ã½À¢ì1HRMINORZ
+CODE_SMELL
+e
+java:S1611„"1Remove the parentheses around the "web" parameter(¥»çñ8Æü¤ì1HRMINORZ
 CODE_SMELL
 t
-java:S6201€"BReplace this instanceof check and cast with 'instanceof User user'(¸êİ£ùÿÿÿÿHÄRMINORZ
+java:S6201"BReplace this instanceof check and cast with 'instanceof User user'(¸êİ£ùÿÿÿÿH RMINORZ
 CODE_SMELL
-j
-java:S1611L"8Remove the parentheses around the "exceptions" parameter(Œ´şq8õéÙšì1HÇRMINORZ
+o
+java:S1611Z"<Remove the parentheses around the "resourceServer" parameter(õìÌš8õéÙšì1HŸRMINORZ
 CODE_SMELL

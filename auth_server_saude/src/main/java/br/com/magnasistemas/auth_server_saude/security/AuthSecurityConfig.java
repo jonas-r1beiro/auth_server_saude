@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -69,7 +70,14 @@ public class AuthSecurityConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
+		
+		http.authorizeHttpRequests(req ->{
+			req.requestMatchers(HttpMethod.POST, "oauth2/usuarios").hasAnyRole("FUNCIONARIO");
+//			req.anyRequest().permitAll();
+		});
+		
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+		
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			.oidc(Customizer.withDefaults());
 		http
@@ -102,15 +110,21 @@ public class AuthSecurityConfig {
 	@Order(2)
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
 			throws Exception {
+		
 		http
-			.authorizeHttpRequests((authorize) -> authorize
+			.authorizeHttpRequests(authorize -> {
+				authorize
 				.requestMatchers("/error").permitAll()
-				.anyRequest().authenticated())
+				.anyRequest().authenticated();
+			})
 			.formLogin(formLogin -> formLogin
 				.loginPage("/login")
 				.permitAll()
 		);
-		return http.build();
+		
+		var retorno = http.build();
+		
+		return retorno;
 	}
 	
 	@Bean
@@ -151,31 +165,54 @@ public class AuthSecurityConfig {
 	public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder,
 																JdbcTemplate jdbcTemplate) {
 		
-		RegisteredClient awblogClient = RegisteredClient
-				.withId("2")
-				.clientId("telaAngular")
-				.clientSecret(passwordEncoder.encode("Magna@123"))
-				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
-				.redirectUri("http://localhost:3000/authorized")
-				.redirectUri("https://oidcdebugger.com/debug")
-				.redirectUri("https://oauth.pstmn.io/v1/callback")
-				.redirectUri("http://localhost:4200/sucesso-login")
-				.tokenSettings(TokenSettings.builder()
-						.accessTokenTimeToLive(Duration.ofMinutes(15))
-						.refreshTokenTimeToLive(Duration.ofDays(1))
-						.reuseRefreshTokens(false)
-						.build())
-				.clientSettings(ClientSettings.builder()
-						.requireAuthorizationConsent(true)
-						.build())
-				.build();
+//		RegisteredClient awblogClient = RegisteredClient
+//				.withId("2")
+//				.clientId("telaAngular")
+//				.clientSecret(passwordEncoder.encode("Magna@123"))
+//				.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+//				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//				.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+////				.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+//				.redirectUri("http://localhost:3000/authorized")
+//				.redirectUri("https://oidcdebugger.com/debug")
+//				.redirectUri("https://oauth.pstmn.io/v1/callback")
+//				.redirectUri("http://localhost:4200/sucesso-login")
+//				.tokenSettings(TokenSettings.builder()
+//						.accessTokenTimeToLive(Duration.ofMinutes(15))
+//						.refreshTokenTimeToLive(Duration.ofDays(1))
+//						.reuseRefreshTokens(false)
+//						.build())
+//				.clientSettings(ClientSettings.builder()
+//						.requireAuthorizationConsent(true)
+//						.build())
+//				.scope("myuser:read")
+//                .scope("myuser:write")
+//                .scope("posts:write")
+//				.build();
+		
+		RegisteredClient telaAngularClient = RegisteredClient
+                .withId("2")
+                .clientId("telaAngular")
+                .clientSecret(passwordEncoder.encode("Magna@123"))
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri("http://localhost:3000/authorized")
+                .redirectUri("https://oidcdebugger.com/debug")
+                .redirectUri("https://oauth.pstmn.io/v1/callback")
+                .redirectUri("http://localhost:4200/sucesso-login")
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofMinutes(15))
+                        .refreshTokenTimeToLive(Duration.ofDays(1))
+                        .reuseRefreshTokens(false)
+                        .build())
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(false)
+                        .build())
+                .build();
 		
 		JdbcRegisteredClientRepository clientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		clientRepository.save(awblogClient);
+		clientRepository.save(telaAngularClient);
 		
 		return clientRepository;
 	}
@@ -187,7 +224,8 @@ public class AuthSecurityConfig {
 				jdbcOperations, registeredClientRepository);
 	}
 	
-	@Bean public OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService (JdbcOperations jdbcOperations,
+	@Bean 
+	public OAuth2AuthorizationConsentService oAuth2AuthorizationConsentService (JdbcOperations jdbcOperations,
 																					RegisteredClientRepository registeredClientRepository) {
 		return new JdbcOAuth2AuthorizationConsentService
 				(jdbcOperations, registeredClientRepository);

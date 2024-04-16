@@ -31,3 +31,17 @@ W
 'src/main/resources/static/css/style.css,f\1\f1805981f76a3b436234f76681e9b7554336982e
 W
 'src/main/resources/templates/login.html,6\4\64b48127ab06e5df4a6ed58b34ac3aba28784c99
+Š
+Zsrc/main/java/br/com/magnasistemas/auth_server_saude/dto/usuario/DadosCadastroUsuario.java,1\9\19fc6c9b91b5c8cf87a4ad770733fdf54fd457d8
+Š
+Zsrc/main/java/br/com/magnasistemas/auth_server_saude/dto/papel/DadosDetalhamentoPapel.java,5\7\57058babb54a7c8cc91e053a928273593cb7c1b4
+Ž
+^src/main/java/br/com/magnasistemas/auth_server_saude/dto/usuario/DadosDetalhamentoUsuario.java,e\0\e0908899cd6aa2bfedcb9ac0d3a9845b9ed20b06
+„
+Tsrc/main/java/br/com/magnasistemas/auth_server_saude/repository/PapelRepository.java,d\3\d332c8bc49a79d8eac365a533c305f5eceadf022
+‹
+[src/main/java/br/com/magnasistemas/auth_server_saude/dto/usuario/DadosAtualizarUsuario.java,6\e\6e22538f013a0dd4b178337caddf7f602b926c05
+€
+Psrc/main/java/br/com/magnasistemas/auth_server_saude/service/UsuarioService.java,0\5\0520d8f974a1c62600d98c6fd3842efa19a76a1c
+†
+Vsrc/main/java/br/com/magnasistemas/auth_server_saude/controller/UsuarioController.java,d\a\da9e75e3321284cd9e7fea90c13776963ac5947c
